@@ -1,0 +1,3 @@
+class FpState {
+  const FpState();
+}
