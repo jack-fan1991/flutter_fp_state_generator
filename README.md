@@ -54,3 +54,25 @@ final match = state.match(
 
 
 ```
+
+* support freezed package
+
+```dart
+import 'package:fp_state_annotation/fp_state_annotation.dart';
+part 'my_file.fp_state.dart';
+/// Make sure state implement in same file
+/// run `flutter pub run build_runner build` to generate the file
+
+@freezed
+@fpState
+sealed class FreezedState with _$FreezedState {
+  const FreezedState._();
+  const factory FreezedState.FreezedState(final String user) = FreezedState1;
+  const factory FreezedState.FreezedState2(final String user, final String id) =
+      FreezedState2;
+  const factory FreezedState.FreezedState3(
+      final String user, final bool activate) = FreezedState3;
+}
+
+
+```

@@ -28,8 +28,7 @@ class GeneratorHelper {
     return fileContent;
   }
 
-  String testCode(
-      Element element, ConstantReader annotation, BuildStep buildStep) {
+  String testCode() {
     final kind = element.kind;
 
     final className = element.displayName;
@@ -43,7 +42,7 @@ class GeneratorHelper {
     final relPath = element.source!.shortName;
     //package:example/data.dart
     final uri = element.source!.uri;
-    var sourceCodePath = buildStep.inputId.path;
+    // var sourceCodePath = buildStep.inputId.path;
 
     return '''
     type -> $kind

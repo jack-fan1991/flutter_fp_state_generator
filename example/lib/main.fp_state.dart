@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'test_data.dart';
+part of 'main.dart';
 
 // **************************************************************************
 // FpStateGenerator
@@ -55,6 +55,57 @@ extension FPUiState on UiState {
       RState() => rState?.call(this as RState),
       R3State() => r3State?.call(this as R3State),
       R4State() => r4State?.call(this as R4State),
+      _ => throw Exception("$runtimeType not match"),
+    };
+    return r;
+  }
+}
+
+extension FPFreezedState on FreezedState {
+  R match<R>({
+    required R Function(FreezedState1 data) freezedState1,
+    required R Function(FreezedState2 data) freezedState2,
+    required R Function(FreezedState3 data) freezedState3,
+  }) {
+    final r = switch (this) {
+      FreezedState1() => freezedState1(this as FreezedState1),
+      FreezedState2() => freezedState2(this as FreezedState2),
+      FreezedState3() => freezedState3(this as FreezedState3),
+      FreezedState() => throw Exception("$runtimeType not match"),
+    };
+    return r;
+  }
+
+  R matchOrElse<R>({
+    R Function(FreezedState1 data)? freezedState1,
+    R Function(FreezedState2 data)? freezedState2,
+    R Function(FreezedState3 data)? freezedState3,
+    required R Function(FreezedState data) orElse,
+  }) {
+    final r = switch (this) {
+      FreezedState1() => freezedState1 == null
+          ? orElse(this as FreezedState1)
+          : freezedState1(this as FreezedState1),
+      FreezedState2() => freezedState2 == null
+          ? orElse(this as FreezedState2)
+          : freezedState2(this as FreezedState2),
+      FreezedState3() => freezedState3 == null
+          ? orElse(this as FreezedState3)
+          : freezedState3(this as FreezedState3),
+      _ => orElse(this),
+    };
+    return r;
+  }
+
+  R? maybeMatch<R>({
+    R Function(FreezedState1 data)? freezedState1,
+    R Function(FreezedState2 data)? freezedState2,
+    R Function(FreezedState3 data)? freezedState3,
+  }) {
+    final r = switch (this) {
+      FreezedState1() => freezedState1?.call(this as FreezedState1),
+      FreezedState2() => freezedState2?.call(this as FreezedState2),
+      FreezedState3() => freezedState3?.call(this as FreezedState3),
       _ => throw Exception("$runtimeType not match"),
     };
     return r;

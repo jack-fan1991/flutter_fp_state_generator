@@ -6,14 +6,31 @@ import 'package:fp_state_generator/src/generator_helper.dart';
 import 'package:source_gen/source_gen.dart';
 
 class FpStateGenerator extends GeneratorForAnnotation<FpState> {
+  final Map<String, int> cache = {};
+
   @override
   generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) async {
     final generatorHelper = GeneratorHelper(element, annotation, buildStep);
+    // print(generatorHelper.testCode());
     final className = generatorHelper.className;
-    final subClassName =
-        getSubClasses(generatorHelper.annotationSourceCode, className);
-    final result = '''
+
+    final isFreezed = isClassFreezed(generatorHelper);
+    // print('====>  $className , is freezed => $isFreezed ');
+    List<String> subClassName = [];
+    if (isFreezed) {
+      final result = freezedSubNameOrNull(generatorHelper);
+      if (result == null) {
+        // print('====> !!!');
+        return "";
+      }
+      subClassName = result;
+    } else {
+      subClassName =
+          getSubClasses(generatorHelper.annotationSourceCode, className);
+    }
+    print('====> $subClassName');
+    final content = '''
     extension FP${element.displayName} on ${element.displayName} {
       ${createMatch(className, subClassName)}
 
@@ -26,8 +43,71 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
 
 ''';
     // await generatorHelper.getFileContent();
+    print(className);
+    return content;
+  }
 
-    return result;
+  bool isClassFreezed(GeneratorHelper generatorHelper) {
+    final lines = generatorHelper.annotationSourceCode.split('\n');
+    final className = generatorHelper.className;
+    int idx = 0;
+    for (final l in lines) {
+      if (l.contains('class $className')) {
+        idx = lines.indexOf(l);
+        // print(
+        //     '===> $l  contains class $className ${l.contains('class $className')}');
+
+        bool isFreezed = false;
+        String targetLine = '';
+        while (!targetLine.contains('}') && idx > 0) {
+          idx--;
+          targetLine = lines.elementAt(idx);
+          // print('===> target line  $targetLine ');
+          if (targetLine.contains("@Freezed") ||
+              targetLine.contains('@freezed')) {
+            isFreezed = true;
+            cache[className] = idx;
+            break;
+          }
+        }
+        return isFreezed;
+      }
+    }
+    return false;
+  }
+
+  List<String>? freezedSubNameOrNull(GeneratorHelper generatorHelper) {
+    final className = generatorHelper.className;
+
+    final classLineStart = cache[className];
+    if (classLineStart == null) {
+      return null;
+    }
+    final freezedClassLine = generatorHelper.annotationSourceCode
+        .split('\n')
+        .sublist(classLineStart);
+
+    print('====>start freezedSubNameOrNull ${freezedClassLine.join()}=====');
+    List<String> subClassName = [];
+    int idx = 0;
+    for (final l in freezedClassLine) {
+      if (l.contains('}')) {
+        break;
+      }
+      if (l.contains('=')) {
+        String sub = '';
+        if (l.endsWith('=')) {
+          sub = freezedClassLine.toList()[idx + 1].replaceAll(';', '');
+        } else {
+          sub = l.split('=').last.trim().replaceAll(';', '');
+        }
+
+        print(sub);
+        subClassName.add(sub);
+      }
+      idx++;
+    }
+    return subClassName.isEmpty ? null : subClassName;
   }
 
   String createMatch(

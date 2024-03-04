@@ -1,8 +1,8 @@
-import 'package:example/test_data.dart';
+import 'package:example/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('testName ', () {
+  test('test State ', () {
     final state = LState();
     final match = state.match(
       lState: (data) => "LState",
@@ -12,6 +12,7 @@ void main() {
     );
     // match => "LState"
     print(match);
+    expect(match, "LState");
 
     final matchOrElse = state.matchOrElse(
       rState: (data) => "FState",
@@ -19,13 +20,36 @@ void main() {
       r4State: (R4State data) {},
       orElse: (data) => "OrElse result",
     );
-    //  matchOrElse => "OrElse result"
-    print(matchOrElse);
+    expect(matchOrElse, "OrElse result");
     final maybeMatch = state.maybeMatch(
       rState: (data) => "FState",
       r3State: (R3State data) {},
       r4State: (R4State data) {},
     );
-    print(maybeMatch);
+    expect(maybeMatch, null);
+  });
+
+  test('test freezed State ', () {
+    final freezedState = FreezedState.FreezedState2("jack", "1");
+
+    final freezedMatch = freezedState.match(
+      freezedState1: (data) => "FreezedState",
+      freezedState2: (data) => "FreezedState2 ${data.user},${data.id} ",
+      freezedState3: (data) => "FreezedState3",
+    );
+    expect(freezedMatch, "FreezedState2 jack,1 ");
+
+    final freezedMatchOrElse = freezedState.matchOrElse(
+      freezedState1: (data) => "FreezedState",
+      freezedState3: (data) => "FreezedState3",
+      orElse: (data) => "OrElse result",
+    );
+    expect(freezedMatchOrElse, "OrElse result");
+
+    final freezedMaybeMatch = freezedState.maybeMatch(
+      freezedState1: (data) => "FreezedState",
+      freezedState3: (data) => "FreezedState3",
+    );
+    expect(freezedMaybeMatch, null);
   });
 }
