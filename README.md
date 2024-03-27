@@ -13,9 +13,10 @@ To use the `@FpState` annotation, you need to add the `fp_state_generator` packa
 
 ```dart
 import 'package:fp_state_annotation/fp_state_annotation.dart';
-part 'my_file.fp_state.dart';
+part 'my_file.fpState.dart';
 /// Make sure state implement in same file
 /// run `flutter pub run build_runner build` to generate the file
+//  @fpState
 @FpState()
 class UiState {}
 

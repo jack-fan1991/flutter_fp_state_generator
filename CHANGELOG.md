@@ -1,4 +1,16 @@
 
+
+# 0.0.7
+- Breaking change: rename '*.fp_State.dart' to '*.fpState.dart'
+
+- Feature: auto generated part '*.fpState.dart' when run flutter pub run build_runner build 
+
+- Fix when sealed class has no subclasses extensions are  generated failed 
+
+# 0.0.6
+
+- Support freezed package
+
 # 0.0.5
 
 - Support freezed package

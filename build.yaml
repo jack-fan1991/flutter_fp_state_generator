@@ -19,7 +19,7 @@ builders:
   fp_state_generator:
     import: "package:fp_state_generator/builder.dart"
     builder_factories: ["fpStateBuilder"]
-    build_extensions: { ".dart": [".fp_state.dart"] }
+    build_extensions: { ".dart": [".fpState.dart"] }
     auto_apply: dependents
     build_to: source
     applies_builders: ["source_gen:combining_builder"]

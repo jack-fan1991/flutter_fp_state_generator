@@ -14,7 +14,11 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
     final generatorHelper = GeneratorHelper(element, annotation, buildStep);
     // print(generatorHelper.testCode());
     final className = generatorHelper.className;
+    // print(generatorHelper.baseFileName);
+    // print(generatorHelper.expectPartFileName);
+    await generatorHelper.fixPartImportContent();
 
+    // print(generatorHelper.sourceCodeContent);
     final isFreezed = isClassFreezed(generatorHelper);
     // print('====>  $className , is freezed => $isFreezed ');
     List<String> subClassName = [];
@@ -29,7 +33,7 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
       subClassName =
           getSubClasses(generatorHelper.annotationSourceCode, className);
     }
-    print('====> $subClassName');
+    // print('====> $subClassName');
     final content = '''
     extension FP${element.displayName} on ${element.displayName} {
       ${createMatch(className, subClassName)}
@@ -43,7 +47,7 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
 
 ''';
     // await generatorHelper.getFileContent();
-    print(className);
+    // print(className);
     return content;
   }
 
@@ -87,7 +91,7 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
         .split('\n')
         .sublist(classLineStart);
 
-    print('====>start freezedSubNameOrNull ${freezedClassLine.join()}=====');
+    // print('====>start freezedSubNameOrNull ${freezedClassLine.join()}=====');
     List<String> subClassName = [];
     int idx = 0;
     for (final l in freezedClassLine) {
@@ -102,7 +106,7 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
           sub = l.split('=').last.trim().replaceAll(';', '');
         }
 
-        print(sub);
+        // print(sub);
         subClassName.add(sub);
       }
       idx++;
@@ -190,6 +194,8 @@ R? maybeMatch<R>({
 
   List<String> getSubClasses(String sourceCode, String className) {
     final pattern = RegExp('class\\s+(\\w+)\\s+extends\\s+$className');
-    return pattern.allMatches(sourceCode).map((e) => e.group(1)!).toList();
+    final classes =
+        pattern.allMatches(sourceCode).map((e) => e.group(1)!).toList();
+    return classes.isEmpty ? [className] : classes;
   }
 }

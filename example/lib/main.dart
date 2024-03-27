@@ -1,7 +1,7 @@
 import 'package:fp_state_generator/fp_state_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'main.fp_state.dart';
 part 'main.freezed.dart';
+part 'main.fpState.dart';
 
 @fpState
 class UiState {}

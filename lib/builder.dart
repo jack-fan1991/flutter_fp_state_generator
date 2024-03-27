@@ -8,4 +8,4 @@ import 'package:source_gen/source_gen.dart';
 /// This builder uses the [FpStateGenerator] to generate the state files.
 /// The generated files will have the extension '.fp_state.dart'.
 Builder fpStateBuilder(BuilderOptions options) =>
-    PartBuilder([FpStateGenerator()], '.fp_state.dart');
+    PartBuilder([FpStateGenerator()], '.fpState.dart');
