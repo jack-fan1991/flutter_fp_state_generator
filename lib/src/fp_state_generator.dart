@@ -13,9 +13,9 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
       Element element, ConstantReader annotation, BuildStep buildStep) async {
     final generatorHelper = GeneratorHelper(element, annotation, buildStep);
     // print(generatorHelper.testCode());
-    print('----');
+    // print('----');
     final className = generatorHelper.className;
-    print(className);
+    // print(className);
     // print(generatorHelper.expectPartFileName);
     await generatorHelper.fixPartImportContent();
 
