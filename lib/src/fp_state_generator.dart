@@ -13,8 +13,9 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
       Element element, ConstantReader annotation, BuildStep buildStep) async {
     final generatorHelper = GeneratorHelper(element, annotation, buildStep);
     // print(generatorHelper.testCode());
+    print('----');
     final className = generatorHelper.className;
-    // print(generatorHelper.baseFileName);
+    print(className);
     // print(generatorHelper.expectPartFileName);
     await generatorHelper.fixPartImportContent();
 
@@ -193,7 +194,8 @@ R? maybeMatch<R>({
   }
 
   List<String> getSubClasses(String sourceCode, String className) {
-    final pattern = RegExp('class\\s+(\\w+)\\s+extends\\s+$className');
+    final pattern =
+        RegExp('class\\s+(\\w+)(?:<\\w*>)?\\s+extends\\s+$className');
     final classes =
         pattern.allMatches(sourceCode).map((e) => e.group(1)!).toList();
     return classes.isEmpty ? [className] : classes;

@@ -1,5 +1,8 @@
 
 
+# 0.0.8
+- support generics class
+
 # 0.0.7
 - Breaking change: rename '*.fp_State.dart' to '*.fpState.dart'
 

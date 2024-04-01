@@ -6,6 +6,49 @@ part of 'main.dart';
 // FpStateGenerator
 // **************************************************************************
 
+extension FPAsyncState on AsyncState {
+  R match<R>({
+    required R Function(AsyncLoading data) asyncLoading,
+    required R Function(AsyncLoaded data) asyncLoaded,
+  }) {
+    final r = switch (this) {
+      AsyncLoading() => asyncLoading(this as AsyncLoading),
+      AsyncLoaded() => asyncLoaded(this as AsyncLoaded),
+      AsyncState() => throw Exception("$runtimeType not match"),
+    };
+    return r;
+  }
+
+  R matchOrElse<R>({
+    R Function(AsyncLoading data)? asyncLoading,
+    R Function(AsyncLoaded data)? asyncLoaded,
+    required R Function(AsyncState data) orElse,
+  }) {
+    final r = switch (this) {
+      AsyncLoading() => asyncLoading == null
+          ? orElse(this as AsyncLoading)
+          : asyncLoading(this as AsyncLoading),
+      AsyncLoaded() => asyncLoaded == null
+          ? orElse(this as AsyncLoaded)
+          : asyncLoaded(this as AsyncLoaded),
+      _ => orElse(this),
+    };
+    return r;
+  }
+
+  R? maybeMatch<R>({
+    R Function(AsyncLoading data)? asyncLoading,
+    R Function(AsyncLoaded data)? asyncLoaded,
+  }) {
+    final r = switch (this) {
+      AsyncLoading() => asyncLoading?.call(this as AsyncLoading),
+      AsyncLoaded() => asyncLoaded?.call(this as AsyncLoaded),
+      _ => throw Exception("$runtimeType not match"),
+    };
+    return r;
+  }
+}
+
 extension FPUiState on UiState {
   R match<R>({
     required R Function(LState data) lState,

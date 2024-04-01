@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:example/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -51,5 +53,29 @@ void main() {
       freezedState3: (data) => "FreezedState3",
     );
     expect(freezedMaybeMatch, null);
+  });
+
+  test('test asyncState', () {
+    final asyncState = AsyncLoaded(data: "data");
+    final asyncMatch = asyncState.match(
+      asyncLoading: (data) => "AsyncLoading",
+      asyncLoaded: (data) => "AsyncLoaded ${data.data}",
+    );
+    // asyncMatch => "AsyncLoaded data"
+    expect(asyncMatch, "AsyncLoaded data");
+
+    final asyncMatchOrElse = asyncState.matchOrElse(
+      asyncLoading: (data) => "AsyncLoading",
+      asyncLoaded: (data) => "AsyncLoaded ${data.data}",
+      orElse: (data) => "OrElse result",
+    );
+    // asyncMatchOrElse => "AsyncLoaded data"
+    expect(asyncMatchOrElse, "AsyncLoaded data");
+
+    final asyncMaybeMatch = asyncState.maybeMatch(
+      asyncLoading: (data) => "AsyncLoading",
+    );
+    // asyncMaybeMatch => null
+    expect(asyncMaybeMatch, null);
   });
 }
