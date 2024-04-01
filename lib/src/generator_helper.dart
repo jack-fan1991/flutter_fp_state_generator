@@ -22,6 +22,26 @@ class GeneratorHelper {
 
   Future<String> get sourceCodeContent => getFileContent();
 
+  String get genericsType {
+    final pattern = RegExp('class\\s+$className(?:<(.*?)>)?');
+    // print('------------- ');
+    // print("r'class\s+$className(?:<(.*?)>)?'");
+    final r = pattern
+        .allMatches(annotationSourceCode)
+        .map((e) => e.group(1))
+        .toList();
+    if (r.first == null) {
+      return '';
+    }
+
+    // print("$r");
+    if (r.isEmpty) return '';
+    final type =
+        pattern.allMatches(annotationSourceCode).map((e) => e.group(1)!).first;
+    // print(type);
+    return type;
+  }
+
   Future<String> getFileContent() async {
     final sourceCodePath = buildStep.inputId.path;
     // 读取文件内容

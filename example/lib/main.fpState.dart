@@ -6,7 +6,7 @@ part of 'main.dart';
 // FpStateGenerator
 // **************************************************************************
 
-extension FPAsyncState on AsyncState {
+extension FPAsyncState<T> on AsyncState<T> {
   R match<R>({
     required R Function(AsyncLoading data) asyncLoading,
     required R Function(AsyncLoaded data) asyncLoaded,

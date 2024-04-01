@@ -1,4 +1,6 @@
 
+# 0.0.10
+- fix bug when class has generic type
 
 # 0.0.9
 - remove unused code

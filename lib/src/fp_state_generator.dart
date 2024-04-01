@@ -13,8 +13,12 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
       Element element, ConstantReader annotation, BuildStep buildStep) async {
     final generatorHelper = GeneratorHelper(element, annotation, buildStep);
     // print(generatorHelper.testCode());
+    // print(generatorHelper.genericsType);
+
     // print('----');
     final className = generatorHelper.className;
+    final genericsType = generatorHelper.genericsType;
+
     // print(className);
     // print(generatorHelper.expectPartFileName);
     await generatorHelper.fixPartImportContent();
@@ -35,8 +39,12 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
           getSubClasses(generatorHelper.annotationSourceCode, className);
     }
     // print('====> $subClassName');
+    String displayName = element.displayName;
+    if (genericsType.isNotEmpty) {
+      displayName = '$displayName<$genericsType>';
+    }
     final content = '''
-    extension FP${element.displayName} on ${element.displayName} {
+    extension FP${displayName} on ${displayName} {
       ${createMatch(className, subClassName)}
 
       ${createMatchOrElse(className, subClassName)}
