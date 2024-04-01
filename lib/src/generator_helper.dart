@@ -8,6 +8,7 @@ class GeneratorHelper {
   final Element element;
   final ConstantReader annotation;
   final BuildStep buildStep;
+  bool isFreezed = false;
   GeneratorHelper(this.element, this.annotation, this.buildStep);
 
   String get annotationSourceCode =>
@@ -22,7 +23,12 @@ class GeneratorHelper {
 
   Future<String> get sourceCodeContent => getFileContent();
 
-  String get genericsType {
+  String getGenericsType(String className) {
+    if (isFreezed) {
+      print('Freezed not support generics type');
+      return '';
+    }
+
     final pattern = RegExp('class\\s+$className(?:<(.*?)>)?');
     // print('------------- ');
     // print("r'class\s+$className(?:<(.*?)>)?'");

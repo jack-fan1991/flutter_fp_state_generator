@@ -1,4 +1,7 @@
 
+# 0.0.11
+- fix bug freezed not support generic type
+
 # 0.0.10
 - fix bug when class has generic type
 

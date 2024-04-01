@@ -8,41 +8,41 @@ part of 'main.dart';
 
 extension FPAsyncState<T> on AsyncState<T> {
   R match<R>({
-    required R Function(AsyncLoading data) asyncLoading,
-    required R Function(AsyncLoaded data) asyncLoaded,
+    required R Function(AsyncLoading<T> data) asyncLoading,
+    required R Function(AsyncLoaded<T> data) asyncLoaded,
   }) {
     final r = switch (this) {
-      AsyncLoading() => asyncLoading(this as AsyncLoading),
-      AsyncLoaded() => asyncLoaded(this as AsyncLoaded),
+      AsyncLoading<T>() => asyncLoading(this as AsyncLoading<T>),
+      AsyncLoaded<T>() => asyncLoaded(this as AsyncLoaded<T>),
       AsyncState() => throw Exception("$runtimeType not match"),
     };
     return r;
   }
 
   R matchOrElse<R>({
-    R Function(AsyncLoading data)? asyncLoading,
-    R Function(AsyncLoaded data)? asyncLoaded,
+    R Function(AsyncLoading<T> data)? asyncLoading,
+    R Function(AsyncLoaded<T> data)? asyncLoaded,
     required R Function(AsyncState data) orElse,
   }) {
     final r = switch (this) {
-      AsyncLoading() => asyncLoading == null
-          ? orElse(this as AsyncLoading)
-          : asyncLoading(this as AsyncLoading),
-      AsyncLoaded() => asyncLoaded == null
-          ? orElse(this as AsyncLoaded)
-          : asyncLoaded(this as AsyncLoaded),
+      AsyncLoading<T>() => asyncLoading == null
+          ? orElse(this as AsyncLoading<T>)
+          : asyncLoading(this as AsyncLoading<T>),
+      AsyncLoaded<T>() => asyncLoaded == null
+          ? orElse(this as AsyncLoaded<T>)
+          : asyncLoaded(this as AsyncLoaded<T>),
       _ => orElse(this),
     };
     return r;
   }
 
   R? maybeMatch<R>({
-    R Function(AsyncLoading data)? asyncLoading,
-    R Function(AsyncLoaded data)? asyncLoaded,
+    R Function(AsyncLoading<T> data)? asyncLoading,
+    R Function(AsyncLoaded<T> data)? asyncLoaded,
   }) {
     final r = switch (this) {
-      AsyncLoading() => asyncLoading?.call(this as AsyncLoading),
-      AsyncLoaded() => asyncLoaded?.call(this as AsyncLoaded),
+      AsyncLoading<T>() => asyncLoading?.call(this as AsyncLoading<T>),
+      AsyncLoaded<T>() => asyncLoaded?.call(this as AsyncLoaded<T>),
       _ => throw Exception("$runtimeType not match"),
     };
     return r;

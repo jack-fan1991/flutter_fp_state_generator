@@ -17,17 +17,17 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
 
     // print('----');
     final className = generatorHelper.className;
-    final genericsType = generatorHelper.genericsType;
+    final genericsType = generatorHelper.getGenericsType(className);
 
     // print(className);
     // print(generatorHelper.expectPartFileName);
     await generatorHelper.fixPartImportContent();
 
     // print(generatorHelper.sourceCodeContent);
-    final isFreezed = isClassFreezed(generatorHelper);
+    generatorHelper.isFreezed = isClassFreezed(generatorHelper);
     // print('====>  $className , is freezed => $isFreezed ');
     List<String> subClassName = [];
-    if (isFreezed) {
+    if (generatorHelper.isFreezed) {
       final result = freezedSubNameOrNull(generatorHelper);
       if (result == null) {
         // print('====> !!!');
@@ -45,11 +45,11 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
     }
     final content = '''
     extension FP${displayName} on ${displayName} {
-      ${createMatch(className, subClassName)}
+      ${createMatch(className, subClassName, generatorHelper)}
 
-      ${createMatchOrElse(className, subClassName)}
+      ${createMatchOrElse(className, subClassName, generatorHelper)}
       
-      ${createMaybeMatch(className, subClassName)}
+      ${createMaybeMatch(className, subClassName, generatorHelper)}
       
     }
 
@@ -126,13 +126,18 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
   String createMatch(
     String className,
     List<String> subClassName,
+    GeneratorHelper generatorHelper,
   ) {
-    final params = subClassName
-        .map((e) => 'required R Function($e data) ${e.toCamelCase()}')
-        .join(',\n');
-    final cases = subClassName
-        .map((e) => '$e() => ${e.toCamelCase()}(this as $e),')
-        .join('\n');
+    final params = subClassName.map((e) {
+      final genericsType = generatorHelper.getGenericsType(className);
+      final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
+      return 'required R Function($e$endFix data) ${e.toCamelCase()}';
+    }).join(',\n');
+    final cases = subClassName.map((e) {
+      final genericsType = generatorHelper.getGenericsType(className);
+      final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
+      return '$e$endFix() => ${e.toCamelCase()}(this as $e$endFix),';
+    }).join('\n');
 
     return '''
 R match<R>({
@@ -150,14 +155,18 @@ R match<R>({
   String createMatchOrElse(
     String className,
     List<String> subClassName,
+    GeneratorHelper generatorHelper,
   ) {
-    final params = subClassName
-        .map((e) => 'R Function($e data)? ${e.toCamelCase()}')
-        .join(',\n');
-    final cases = subClassName
-        .map((e) =>
-            '$e() =>${e.toCamelCase()}==null? orElse(this as $e): ${e.toCamelCase()}(this as $e),')
-        .join('\n');
+    final params = subClassName.map((e) {
+      final genericsType = generatorHelper.getGenericsType(e);
+      final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
+      return 'R Function($e$endFix data)? ${e.toCamelCase()}';
+    }).join(',\n');
+    final cases = subClassName.map((e) {
+      final genericsType = generatorHelper.getGenericsType(e);
+      final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
+      return '$e$endFix() =>${e.toCamelCase()}==null? orElse(this as $e$endFix): ${e.toCamelCase()}(this as $e$endFix),';
+    }).join('\n');
 
     return '''
 R matchOrElse<R>({
@@ -176,13 +185,18 @@ R matchOrElse<R>({
   String createMaybeMatch(
     String className,
     List<String> subClassName,
+    GeneratorHelper generatorHelper,
   ) {
-    final params = subClassName
-        .map((e) => 'R Function($e data)? ${e.toCamelCase()}')
-        .join(',\n');
-    final cases = subClassName
-        .map((e) => '$e() => ${e.toCamelCase()}?.call(this as $e),')
-        .join('\n');
+    final params = subClassName.map((e) {
+      final genericsType = generatorHelper.getGenericsType(e);
+      final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
+      return 'R Function($e$endFix data)? ${e.toCamelCase()}';
+    }).join(',\n');
+    final cases = subClassName.map((e) {
+      final genericsType = generatorHelper.getGenericsType(className);
+      final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
+      return '$e$endFix () => ${e.toCamelCase()}?.call(this as $e$endFix),';
+    }).join('\n');
     return '''
 R? maybeMatch<R>({
     $params,
