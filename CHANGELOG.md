@@ -1,3 +1,6 @@
+# 0.0.13
+- fix bug generic type missing, 
+
 # 0.0.12
 - When the class does not have member variables, use void callback.
 - Export AsyncState,Result  for easy to use

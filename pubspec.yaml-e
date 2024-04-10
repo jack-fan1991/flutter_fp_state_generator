@@ -1,8 +1,7 @@
 name: fp_state_generator
 
-description: "The `@FpState` annotation is used in dependency with the `fp_state_generator` package to generate template code for managing state 
-"
-version: 0.0.11
+description: "The `@FpState` annotation is used in dependency with the `fp_state_generator` package to generate template code for managing state"
+version: 0.0.12
 homepage: https://pub.dev/packages/fp_state_generator
 repository: https://github.com/jack-fan1991/flutter_fp_state_generator
 

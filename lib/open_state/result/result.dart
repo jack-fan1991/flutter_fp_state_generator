@@ -2,7 +2,7 @@ import 'package:fp_state_generator/fp_state_annotation.dart';
 part 'result.fpState.dart';
 
 @fpState
-class Result<T> {}
+sealed class Result<T> {}
 
 class ResultSuccess<T> extends Result<T> {
   final T? data;

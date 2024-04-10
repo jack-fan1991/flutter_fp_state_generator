@@ -1,4 +1,4 @@
-import 'package:example/async_state/async_state.dart';
+import 'package:example/open_state/async_state/async_state.dart';
 import 'package:example/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 

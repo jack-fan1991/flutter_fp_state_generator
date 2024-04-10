@@ -1,3 +1,4 @@
+/// ignore freezed
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:change_case/change_case.dart';
@@ -23,8 +24,8 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
     final className = generatorHelper.className;
 
     final genericsType = generatorHelper.getGenericsType(className);
+    print('====>  $genericsType');
 
-    // print(className);
     // print(generatorHelper.expectPartFileName);
     await generatorHelper.fixPartImportContent();
 
@@ -64,7 +65,7 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
 ''';
     // await generatorHelper.getFileContent();
     // print(className);
-    print('====> !!! $content');
+    // print('====> !!! $content');
 
     return content;
   }
@@ -187,7 +188,6 @@ R match<R>({
         generatorHelper.sourceCodeContent,
         generatorHelper.isFreezed ? className : e,
       );
-      print('====> !!! $className');
 
       final isClassHasMember = generatorHelper.isFreezed
           ? fullClassContent.contains("factory $className.${e}()") == false
@@ -200,7 +200,6 @@ R match<R>({
 
       return 'R Function($callBackName)? ${e.toCamelCase()}';
     }).join(',\n');
-    print('====> !!! $className');
     final cases = subClassName.map((e) {
       final fullClassContent = bigOpenCloseFinder.run(
         generatorHelper.sourceCodeContent,

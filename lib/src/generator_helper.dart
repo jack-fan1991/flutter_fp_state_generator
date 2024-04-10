@@ -39,7 +39,7 @@ class GeneratorHelper {
         return '';
       }
 
-      print('==d==> !!! $className');
+      // print('==d==> !!! $className');
 
       if (r.isEmpty) return '';
 
@@ -54,9 +54,8 @@ class GeneratorHelper {
         print('Freezed not support generics type');
         return '';
       }
-    } finally {
-      return '';
     }
+    return '';
   }
 
   Future<String> getFileContent() async {
