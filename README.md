@@ -9,15 +9,16 @@ To use the `@FpState` annotation, you need to add the `fp_state_generator` packa
 
 * [example](./example/test/data_test.dart) 
 
+* [More detail in test](./example/test/data_test.dart)
 
-
+* If you forget to add the `@FpState` annotation, you can run the command `flutter pub run build_runner build` after first failed it will insert 'part 'my_file.fpState.dart;' then run the command again to generate the file
 ```dart
 import 'package:fp_state_annotation/fp_state_annotation.dart';
 part 'my_file.fpState.dart';
 /// Make sure state implement in same file
 /// run `flutter pub run build_runner build` to generate the file
-//  @fpState
-@FpState()
+
+@fpState
 class UiState {}
 
 class LState extends UiState {}
@@ -26,32 +27,10 @@ class RState extends UiState {}
 
 class R3State extends UiState {}
 
-class R4State extends UiState {}
-
-
-final state = LState();
-
-final match = state.match(
-    lState: (data) => "LState",
-    rState: (data) => "FState",
-    r3State: (R3State data) {},
-    r4State: (R4State data) {},
-  );
-  // match => "LState"
-  final matchOrElse = state.matchOrElse(
-    rState: (data) => "FState",
-    r3State: (R3State data) {},
-    r4State: (R4State data) {},
-    orElse: (data) => "OrElse result",
-  );
-  //  matchOrElse => "OrElse result"
-
-  final maybeMatch = state.maybeMatch(
-    rState: (data) => "FState",
-    r3State: (R3State data) {},
-    r4State: (R4State data) {},
-  );
-  // maybeMatch = null
+class MemberState extends UiState {
+  final String user;
+  MemberState(this.user);
+}
 
 
 ```
@@ -68,6 +47,7 @@ part 'my_file.fp_state.dart';
 @fpState
 sealed class FreezedState with _$FreezedState {
   const FreezedState._();
+  const factory FreezedState.NoMember() = NoMember;
   const factory FreezedState.FreezedState(final String user) = FreezedState1;
   const factory FreezedState.FreezedState2(final String user, final String id) =
       FreezedState2;
@@ -77,3 +57,7 @@ sealed class FreezedState with _$FreezedState {
 
 
 ```
+
+## Easy to use state
+* [AsyncState](./lib/open_state/async_state/async_state.dart)
+* [Result](./lib/open_state/result/result.dart)

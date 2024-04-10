@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FreezedState {
-  String get user => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() NoMember,
     required TResult Function(String user) FreezedState,
     required TResult Function(String user, String id) FreezedState2,
     required TResult Function(String user, bool activate) FreezedState3,
@@ -26,6 +26,7 @@ mixin _$FreezedState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? NoMember,
     TResult? Function(String user)? FreezedState,
     TResult? Function(String user, String id)? FreezedState2,
     TResult? Function(String user, bool activate)? FreezedState3,
@@ -33,6 +34,7 @@ mixin _$FreezedState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? NoMember,
     TResult Function(String user)? FreezedState,
     TResult Function(String user, String id)? FreezedState2,
     TResult Function(String user, bool activate)? FreezedState3,
@@ -41,6 +43,7 @@ mixin _$FreezedState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(NoMember value) NoMember,
     required TResult Function(FreezedState1 value) FreezedState,
     required TResult Function(FreezedState2 value) FreezedState2,
     required TResult Function(FreezedState3 value) FreezedState3,
@@ -48,6 +51,7 @@ mixin _$FreezedState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NoMember value)? NoMember,
     TResult? Function(FreezedState1 value)? FreezedState,
     TResult? Function(FreezedState2 value)? FreezedState2,
     TResult? Function(FreezedState3 value)? FreezedState3,
@@ -55,15 +59,12 @@ mixin _$FreezedState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(NoMember value)? NoMember,
     TResult Function(FreezedState1 value)? FreezedState,
     TResult Function(FreezedState2 value)? FreezedState2,
     TResult Function(FreezedState3 value)? FreezedState3,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $FreezedStateCopyWith<FreezedState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -72,8 +73,6 @@ abstract class $FreezedStateCopyWith<$Res> {
   factory $FreezedStateCopyWith(
           FreezedState value, $Res Function(FreezedState) then) =
       _$FreezedStateCopyWithImpl<$Res, FreezedState>;
-  @useResult
-  $Res call({String user});
 }
 
 /// @nodoc
@@ -85,28 +84,128 @@ class _$FreezedStateCopyWithImpl<$Res, $Val extends FreezedState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? user = null,
-  }) {
-    return _then(_value.copyWith(
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$FreezedState1ImplCopyWith<$Res>
-    implements $FreezedStateCopyWith<$Res> {
+abstract class _$$NoMemberImplCopyWith<$Res> {
+  factory _$$NoMemberImplCopyWith(
+          _$NoMemberImpl value, $Res Function(_$NoMemberImpl) then) =
+      __$$NoMemberImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$NoMemberImplCopyWithImpl<$Res>
+    extends _$FreezedStateCopyWithImpl<$Res, _$NoMemberImpl>
+    implements _$$NoMemberImplCopyWith<$Res> {
+  __$$NoMemberImplCopyWithImpl(
+      _$NoMemberImpl _value, $Res Function(_$NoMemberImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$NoMemberImpl extends NoMember {
+  const _$NoMemberImpl() : super._();
+
+  @override
+  String toString() {
+    return 'FreezedState.NoMember()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$NoMemberImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() NoMember,
+    required TResult Function(String user) FreezedState,
+    required TResult Function(String user, String id) FreezedState2,
+    required TResult Function(String user, bool activate) FreezedState3,
+  }) {
+    return NoMember();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? NoMember,
+    TResult? Function(String user)? FreezedState,
+    TResult? Function(String user, String id)? FreezedState2,
+    TResult? Function(String user, bool activate)? FreezedState3,
+  }) {
+    return NoMember?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? NoMember,
+    TResult Function(String user)? FreezedState,
+    TResult Function(String user, String id)? FreezedState2,
+    TResult Function(String user, bool activate)? FreezedState3,
+    required TResult orElse(),
+  }) {
+    if (NoMember != null) {
+      return NoMember();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NoMember value) NoMember,
+    required TResult Function(FreezedState1 value) FreezedState,
+    required TResult Function(FreezedState2 value) FreezedState2,
+    required TResult Function(FreezedState3 value) FreezedState3,
+  }) {
+    return NoMember(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NoMember value)? NoMember,
+    TResult? Function(FreezedState1 value)? FreezedState,
+    TResult? Function(FreezedState2 value)? FreezedState2,
+    TResult? Function(FreezedState3 value)? FreezedState3,
+  }) {
+    return NoMember?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NoMember value)? NoMember,
+    TResult Function(FreezedState1 value)? FreezedState,
+    TResult Function(FreezedState2 value)? FreezedState2,
+    TResult Function(FreezedState3 value)? FreezedState3,
+    required TResult orElse(),
+  }) {
+    if (NoMember != null) {
+      return NoMember(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NoMember extends FreezedState {
+  const factory NoMember() = _$NoMemberImpl;
+  const NoMember._() : super._();
+}
+
+/// @nodoc
+abstract class _$$FreezedState1ImplCopyWith<$Res> {
   factory _$$FreezedState1ImplCopyWith(
           _$FreezedState1Impl value, $Res Function(_$FreezedState1Impl) then) =
       __$$FreezedState1ImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String user});
 }
@@ -166,6 +265,7 @@ class _$FreezedState1Impl extends FreezedState1 {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() NoMember,
     required TResult Function(String user) FreezedState,
     required TResult Function(String user, String id) FreezedState2,
     required TResult Function(String user, bool activate) FreezedState3,
@@ -176,6 +276,7 @@ class _$FreezedState1Impl extends FreezedState1 {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? NoMember,
     TResult? Function(String user)? FreezedState,
     TResult? Function(String user, String id)? FreezedState2,
     TResult? Function(String user, bool activate)? FreezedState3,
@@ -186,6 +287,7 @@ class _$FreezedState1Impl extends FreezedState1 {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? NoMember,
     TResult Function(String user)? FreezedState,
     TResult Function(String user, String id)? FreezedState2,
     TResult Function(String user, bool activate)? FreezedState3,
@@ -200,6 +302,7 @@ class _$FreezedState1Impl extends FreezedState1 {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(NoMember value) NoMember,
     required TResult Function(FreezedState1 value) FreezedState,
     required TResult Function(FreezedState2 value) FreezedState2,
     required TResult Function(FreezedState3 value) FreezedState3,
@@ -210,6 +313,7 @@ class _$FreezedState1Impl extends FreezedState1 {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NoMember value)? NoMember,
     TResult? Function(FreezedState1 value)? FreezedState,
     TResult? Function(FreezedState2 value)? FreezedState2,
     TResult? Function(FreezedState3 value)? FreezedState3,
@@ -220,6 +324,7 @@ class _$FreezedState1Impl extends FreezedState1 {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(NoMember value)? NoMember,
     TResult Function(FreezedState1 value)? FreezedState,
     TResult Function(FreezedState2 value)? FreezedState2,
     TResult Function(FreezedState3 value)? FreezedState3,
@@ -236,21 +341,17 @@ abstract class FreezedState1 extends FreezedState {
   const factory FreezedState1(final String user) = _$FreezedState1Impl;
   const FreezedState1._() : super._();
 
-  @override
   String get user;
-  @override
   @JsonKey(ignore: true)
   _$$FreezedState1ImplCopyWith<_$FreezedState1Impl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$FreezedState2ImplCopyWith<$Res>
-    implements $FreezedStateCopyWith<$Res> {
+abstract class _$$FreezedState2ImplCopyWith<$Res> {
   factory _$$FreezedState2ImplCopyWith(
           _$FreezedState2Impl value, $Res Function(_$FreezedState2Impl) then) =
       __$$FreezedState2ImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String user, String id});
 }
@@ -318,6 +419,7 @@ class _$FreezedState2Impl extends FreezedState2 {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() NoMember,
     required TResult Function(String user) FreezedState,
     required TResult Function(String user, String id) FreezedState2,
     required TResult Function(String user, bool activate) FreezedState3,
@@ -328,6 +430,7 @@ class _$FreezedState2Impl extends FreezedState2 {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? NoMember,
     TResult? Function(String user)? FreezedState,
     TResult? Function(String user, String id)? FreezedState2,
     TResult? Function(String user, bool activate)? FreezedState3,
@@ -338,6 +441,7 @@ class _$FreezedState2Impl extends FreezedState2 {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? NoMember,
     TResult Function(String user)? FreezedState,
     TResult Function(String user, String id)? FreezedState2,
     TResult Function(String user, bool activate)? FreezedState3,
@@ -352,6 +456,7 @@ class _$FreezedState2Impl extends FreezedState2 {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(NoMember value) NoMember,
     required TResult Function(FreezedState1 value) FreezedState,
     required TResult Function(FreezedState2 value) FreezedState2,
     required TResult Function(FreezedState3 value) FreezedState3,
@@ -362,6 +467,7 @@ class _$FreezedState2Impl extends FreezedState2 {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NoMember value)? NoMember,
     TResult? Function(FreezedState1 value)? FreezedState,
     TResult? Function(FreezedState2 value)? FreezedState2,
     TResult? Function(FreezedState3 value)? FreezedState3,
@@ -372,6 +478,7 @@ class _$FreezedState2Impl extends FreezedState2 {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(NoMember value)? NoMember,
     TResult Function(FreezedState1 value)? FreezedState,
     TResult Function(FreezedState2 value)? FreezedState2,
     TResult Function(FreezedState3 value)? FreezedState3,
@@ -389,22 +496,18 @@ abstract class FreezedState2 extends FreezedState {
       _$FreezedState2Impl;
   const FreezedState2._() : super._();
 
-  @override
   String get user;
   String get id;
-  @override
   @JsonKey(ignore: true)
   _$$FreezedState2ImplCopyWith<_$FreezedState2Impl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$FreezedState3ImplCopyWith<$Res>
-    implements $FreezedStateCopyWith<$Res> {
+abstract class _$$FreezedState3ImplCopyWith<$Res> {
   factory _$$FreezedState3ImplCopyWith(
           _$FreezedState3Impl value, $Res Function(_$FreezedState3Impl) then) =
       __$$FreezedState3ImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String user, bool activate});
 }
@@ -473,6 +576,7 @@ class _$FreezedState3Impl extends FreezedState3 {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() NoMember,
     required TResult Function(String user) FreezedState,
     required TResult Function(String user, String id) FreezedState2,
     required TResult Function(String user, bool activate) FreezedState3,
@@ -483,6 +587,7 @@ class _$FreezedState3Impl extends FreezedState3 {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? NoMember,
     TResult? Function(String user)? FreezedState,
     TResult? Function(String user, String id)? FreezedState2,
     TResult? Function(String user, bool activate)? FreezedState3,
@@ -493,6 +598,7 @@ class _$FreezedState3Impl extends FreezedState3 {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? NoMember,
     TResult Function(String user)? FreezedState,
     TResult Function(String user, String id)? FreezedState2,
     TResult Function(String user, bool activate)? FreezedState3,
@@ -507,6 +613,7 @@ class _$FreezedState3Impl extends FreezedState3 {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(NoMember value) NoMember,
     required TResult Function(FreezedState1 value) FreezedState,
     required TResult Function(FreezedState2 value) FreezedState2,
     required TResult Function(FreezedState3 value) FreezedState3,
@@ -517,6 +624,7 @@ class _$FreezedState3Impl extends FreezedState3 {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NoMember value)? NoMember,
     TResult? Function(FreezedState1 value)? FreezedState,
     TResult? Function(FreezedState2 value)? FreezedState2,
     TResult? Function(FreezedState3 value)? FreezedState3,
@@ -527,6 +635,7 @@ class _$FreezedState3Impl extends FreezedState3 {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(NoMember value)? NoMember,
     TResult Function(FreezedState1 value)? FreezedState,
     TResult Function(FreezedState2 value)? FreezedState2,
     TResult Function(FreezedState3 value)? FreezedState3,
@@ -544,10 +653,8 @@ abstract class FreezedState3 extends FreezedState {
       _$FreezedState3Impl;
   const FreezedState3._() : super._();
 
-  @override
   String get user;
   bool get activate;
-  @override
   @JsonKey(ignore: true)
   _$$FreezedState3ImplCopyWith<_$FreezedState3Impl> get copyWith =>
       throw _privateConstructorUsedError;

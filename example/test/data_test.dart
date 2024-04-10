@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:example/async_state/async_state.dart';
 import 'package:example/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -7,27 +6,28 @@ void main() {
   test('test State ', () {
     final state = LState();
     final match = state.match(
-      lState: (data) => "LState",
-      rState: (data) => "FState",
-      r3State: (R3State data) {},
-      r4State: (R4State data) {},
+      lState: () => "LState",
+      rState: () => "FState",
+      r3State: () {},
+      memberState: (MemberState data) {},
     );
     // match => "LState"
     print(match);
     expect(match, "LState");
 
     final matchOrElse = state.matchOrElse(
-      rState: (data) => "FState",
-      r3State: (R3State data) {},
-      r4State: (R4State data) {},
-      orElse: (data) => "OrElse result",
+      rState: () => "rState",
+      r3State: () {},
+      orElse: (data) => "No implement lState so call OrElse",
     );
-    expect(matchOrElse, "OrElse result");
+    expect(matchOrElse, "No implement lState so call OrElse");
+
     final maybeMatch = state.maybeMatch(
-      rState: (data) => "FState",
-      r3State: (R3State data) {},
-      r4State: (R4State data) {},
+      rState: () => "rState",
+      r3State: () {},
+      memberState: (MemberState data) {},
     );
+    // No implement lState so return null
     expect(maybeMatch, null);
   });
 
@@ -38,44 +38,46 @@ void main() {
       freezedState1: (data) => "FreezedState",
       freezedState2: (data) => "FreezedState2 ${data.user},${data.id} ",
       freezedState3: (data) => "FreezedState3",
+      noMember: () {},
     );
     expect(freezedMatch, "FreezedState2 jack,1 ");
 
     final freezedMatchOrElse = freezedState.matchOrElse(
       freezedState1: (data) => "FreezedState",
       freezedState3: (data) => "FreezedState3",
-      orElse: (data) => "OrElse result",
+      orElse: (data) => "No implement FreezedState2 so call OrElse",
     );
-    expect(freezedMatchOrElse, "OrElse result");
+    expect(freezedMatchOrElse, "No implement FreezedState2 so call OrElse");
 
     final freezedMaybeMatch = freezedState.maybeMatch(
       freezedState1: (data) => "FreezedState",
       freezedState3: (data) => "FreezedState3",
     );
+    // No implement FreezedState2 so return null
     expect(freezedMaybeMatch, null);
   });
 
   test('test asyncState', () {
     final asyncState = AsyncLoaded(data: "data");
     final asyncMatch = asyncState.match(
-      asyncLoading: (data) => "AsyncLoading",
+      asyncLoading: () => "AsyncLoading",
       asyncLoaded: (data) => "AsyncLoaded ${data.data}",
+      asyncFailed: (AsyncFailed<dynamic> data) {},
     );
     // asyncMatch => "AsyncLoaded data"
     expect(asyncMatch, "AsyncLoaded data");
 
     final asyncMatchOrElse = asyncState.matchOrElse(
-      asyncLoading: (data) => "AsyncLoading",
-      asyncLoaded: (data) => "AsyncLoaded ${data.data}",
-      orElse: (data) => "OrElse result",
+      asyncLoading: () => "AsyncLoading",
+      orElse: (data) => "No implement asyncLoaded so call OrElse",
     );
-    // asyncMatchOrElse => "AsyncLoaded data"
-    expect(asyncMatchOrElse, "AsyncLoaded data");
+
+    expect(asyncMatchOrElse, "No implement asyncLoaded so call OrElse");
 
     final asyncMaybeMatch = asyncState.maybeMatch(
-      asyncLoading: (data) => "AsyncLoading",
+      asyncLoading: () => "AsyncLoading",
     );
-    // asyncMaybeMatch => null
+    // No implement asyncLoaded so return null
     expect(asyncMaybeMatch, null);
   });
 }

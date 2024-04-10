@@ -3,20 +3,25 @@ import 'package:build/build.dart';
 import 'package:change_case/change_case.dart';
 import 'package:fp_state_generator/fp_state_annotation.dart';
 import 'package:fp_state_generator/src/generator_helper.dart';
+import 'package:fp_state_generator/src/open_close_finder.dart';
 import 'package:source_gen/source_gen.dart';
 
 class FpStateGenerator extends GeneratorForAnnotation<FpState> {
   final Map<String, int> cache = {};
+  final BigOpenCloseFinder bigOpenCloseFinder = BigOpenCloseFinder();
 
   @override
   generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) async {
-    final generatorHelper = GeneratorHelper(element, annotation, buildStep);
+    final generatorHelper =
+        await GeneratorHelper(element, annotation, buildStep)
+          ..getFileContent();
     // print(generatorHelper.testCode());
     // print(generatorHelper.genericsType);
 
     // print('----');
     final className = generatorHelper.className;
+
     final genericsType = generatorHelper.getGenericsType(className);
 
     // print(className);
@@ -38,11 +43,13 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
       subClassName =
           getSubClasses(generatorHelper.annotationSourceCode, className);
     }
+
     // print('====> $subClassName');
     String displayName = element.displayName;
     if (genericsType.isNotEmpty) {
       displayName = '$displayName<$genericsType>';
     }
+
     final content = '''
     extension FP${displayName} on ${displayName} {
       ${createMatch(className, subClassName, generatorHelper)}
@@ -57,6 +64,8 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
 ''';
     // await generatorHelper.getFileContent();
     // print(className);
+    print('====> !!! $content');
+
     return content;
   }
 
@@ -129,14 +138,30 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
     GeneratorHelper generatorHelper,
   ) {
     final params = subClassName.map((e) {
+      final fullClassContent = bigOpenCloseFinder.run(
+        generatorHelper.sourceCodeContent,
+        generatorHelper.isFreezed ? className : e,
+      );
+      final isClassHasMember = generatorHelper.isFreezed
+          ? fullClassContent.contains("factory $className.${e}()") == false
+          : fullClassContent.contains("final ");
       final genericsType = generatorHelper.getGenericsType(className);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
-      return 'required R Function($e$endFix data) ${e.toCamelCase()}';
+      final callBackName = isClassHasMember ? '$e$endFix data' : '';
+      return 'required R Function($callBackName) ${e.toCamelCase()}';
     }).join(',\n');
     final cases = subClassName.map((e) {
+      final fullClassContent = bigOpenCloseFinder.run(
+        generatorHelper.sourceCodeContent,
+        generatorHelper.isFreezed ? className : e,
+      );
+      final isClassHasMember = generatorHelper.isFreezed
+          ? fullClassContent.contains("factory $className.${e}()") == false
+          : fullClassContent.contains("final ");
       final genericsType = generatorHelper.getGenericsType(className);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
-      return '$e$endFix() => ${e.toCamelCase()}(this as $e$endFix),';
+      final callBackName = isClassHasMember ? 'this as $e$endFix' : '';
+      return '$e$endFix() => ${e.toCamelCase()}($callBackName),';
     }).join('\n');
 
     return '''
@@ -158,14 +183,36 @@ R match<R>({
     GeneratorHelper generatorHelper,
   ) {
     final params = subClassName.map((e) {
+      final fullClassContent = bigOpenCloseFinder.run(
+        generatorHelper.sourceCodeContent,
+        generatorHelper.isFreezed ? className : e,
+      );
+      print('====> !!! $className');
+
+      final isClassHasMember = generatorHelper.isFreezed
+          ? fullClassContent.contains("factory $className.${e}()") == false
+          : fullClassContent.contains("final ");
+
       final genericsType = generatorHelper.getGenericsType(e);
+
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
-      return 'R Function($e$endFix data)? ${e.toCamelCase()}';
+      final callBackName = isClassHasMember ? '$e$endFix data' : '';
+
+      return 'R Function($callBackName)? ${e.toCamelCase()}';
     }).join(',\n');
+    print('====> !!! $className');
     final cases = subClassName.map((e) {
+      final fullClassContent = bigOpenCloseFinder.run(
+        generatorHelper.sourceCodeContent,
+        generatorHelper.isFreezed ? className : e,
+      );
+      final isClassHasMember = generatorHelper.isFreezed
+          ? fullClassContent.contains("factory $className.${e}()") == false
+          : fullClassContent.contains("final ");
       final genericsType = generatorHelper.getGenericsType(e);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
-      return '$e$endFix() =>${e.toCamelCase()}==null? orElse(this as $e$endFix): ${e.toCamelCase()}(this as $e$endFix),';
+      final callBackName = isClassHasMember ? 'this as $e$endFix' : '';
+      return '$e$endFix() =>${e.toCamelCase()}==null? orElse(this as $e$endFix): ${e.toCamelCase()}($callBackName),';
     }).join('\n');
 
     return '''
@@ -188,14 +235,30 @@ R matchOrElse<R>({
     GeneratorHelper generatorHelper,
   ) {
     final params = subClassName.map((e) {
+      final fullClassContent = bigOpenCloseFinder.run(
+        generatorHelper.sourceCodeContent,
+        generatorHelper.isFreezed ? className : e,
+      );
+      final isClassHasMember = generatorHelper.isFreezed
+          ? fullClassContent.contains("factory $className.${e}()") == false
+          : fullClassContent.contains("final ");
       final genericsType = generatorHelper.getGenericsType(e);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
-      return 'R Function($e$endFix data)? ${e.toCamelCase()}';
+      final callBackName = isClassHasMember ? '$e$endFix data' : '';
+      return 'R Function($callBackName)? ${e.toCamelCase()}';
     }).join(',\n');
     final cases = subClassName.map((e) {
+      final fullClassContent = bigOpenCloseFinder.run(
+        generatorHelper.sourceCodeContent,
+        generatorHelper.isFreezed ? className : e,
+      );
+      final isClassHasMember = generatorHelper.isFreezed
+          ? fullClassContent.contains("factory $className.${e}()") == false
+          : fullClassContent.contains("final ");
       final genericsType = generatorHelper.getGenericsType(className);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
-      return '$e$endFix () => ${e.toCamelCase()}?.call(this as $e$endFix),';
+      final callBackName = isClassHasMember ? 'this as $e$endFix' : '';
+      return '$e$endFix () => ${e.toCamelCase()}?.call($callBackName),';
     }).join('\n');
     return '''
 R? maybeMatch<R>({

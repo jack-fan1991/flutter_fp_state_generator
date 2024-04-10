@@ -8,6 +8,7 @@ class GeneratorHelper {
   final Element element;
   final ConstantReader annotation;
   final BuildStep buildStep;
+  String _sourceCodeContent = '';
   bool isFreezed = false;
   GeneratorHelper(this.element, this.annotation, this.buildStep);
 
@@ -21,31 +22,41 @@ class GeneratorHelper {
       sourceCodePath.split('/').last.replaceAll('.dart', '');
   String get expectPartFileName => "part '$baseFileName.fpState.dart';";
 
-  Future<String> get sourceCodeContent => getFileContent();
+  String get sourceCodeContent => _sourceCodeContent;
 
   String getGenericsType(String className) {
-    if (isFreezed) {
-      print('Freezed not support generics type');
-      return '';
-    }
-
     final pattern = RegExp('class\\s+$className(?:<(.*?)>)?');
     // print('------------- ');
     // print("r'class\s+$className(?:<(.*?)>)?'");
-    final r = pattern
-        .allMatches(annotationSourceCode)
-        .map((e) => e.group(1))
-        .toList();
-    if (r.first == null) {
+    final m = pattern.allMatches(annotationSourceCode);
+    try {
+      final r = pattern
+          .allMatches(annotationSourceCode)
+          .map((e) => e.group(1))
+          .toList();
+
+      if (r.first == null) {
+        return '';
+      }
+
+      print('==d==> !!! $className');
+
+      if (r.isEmpty) return '';
+
+      final type = pattern
+          .allMatches(annotationSourceCode)
+          .map((e) => e.group(1)!)
+          .first;
+      // print(type);
+      return type;
+    } catch (e) {
+      if (isFreezed) {
+        print('Freezed not support generics type');
+        return '';
+      }
+    } finally {
       return '';
     }
-
-    // print("$r");
-    if (r.isEmpty) return '';
-    final type =
-        pattern.allMatches(annotationSourceCode).map((e) => e.group(1)!).first;
-    // print(type);
-    return type;
   }
 
   Future<String> getFileContent() async {
@@ -55,11 +66,12 @@ class GeneratorHelper {
     // print('==========');
     // print(fileContent);
     // print('==========');
+    _sourceCodeContent = fileContent;
     return fileContent;
   }
 
   Future<void> fixPartImportContent() async {
-    final sourceCode = await sourceCodeContent;
+    final sourceCode = await getFileContent();
     print(expectPartFileName);
     if (sourceCode.contains(expectPartFileName)) return;
     final lastImportIdx =

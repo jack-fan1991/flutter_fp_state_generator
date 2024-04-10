@@ -1,3 +1,7 @@
+# 0.0.12
+- When the class does not have member variables, use void callback.
+- Export AsyncState,Result  for easy to use
+- sdk version sdk: '>=3.0.0 <4.0.0'
 
 # 0.0.11
 - fix bug freezed not support generic type
