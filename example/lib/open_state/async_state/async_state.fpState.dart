@@ -8,12 +8,12 @@ part of 'async_state.dart';
 
 extension FPAsyncState<T> on AsyncState<T> {
   R match<R>({
-    required R Function() asyncLoading,
+    required R Function(AsyncLoading<T> data) asyncLoading,
     required R Function(AsyncLoaded<T> data) asyncLoaded,
     required R Function(AsyncFailed<T> data) asyncFailed,
   }) {
     final r = switch (this) {
-      AsyncLoading<T>() => asyncLoading(),
+      AsyncLoading<T>() => asyncLoading(this as AsyncLoading<T>),
       AsyncLoaded<T>() => asyncLoaded(this as AsyncLoaded<T>),
       AsyncFailed<T>() => asyncFailed(this as AsyncFailed<T>),
       AsyncState() => throw Exception("$runtimeType not match"),
@@ -22,14 +22,15 @@ extension FPAsyncState<T> on AsyncState<T> {
   }
 
   R matchOrElse<R>({
-    R Function()? asyncLoading,
+    R Function(AsyncLoading<T> data)? asyncLoading,
     R Function(AsyncLoaded<T> data)? asyncLoaded,
     R Function(AsyncFailed<T> data)? asyncFailed,
     required R Function(AsyncState data) orElse,
   }) {
     final r = switch (this) {
-      AsyncLoading<T>() =>
-        asyncLoading == null ? orElse(this as AsyncLoading<T>) : asyncLoading(),
+      AsyncLoading<T>() => asyncLoading == null
+          ? orElse(this as AsyncLoading<T>)
+          : asyncLoading(this as AsyncLoading<T>),
       AsyncLoaded<T>() => asyncLoaded == null
           ? orElse(this as AsyncLoaded<T>)
           : asyncLoaded(this as AsyncLoaded<T>),
@@ -42,12 +43,12 @@ extension FPAsyncState<T> on AsyncState<T> {
   }
 
   R? maybeMatch<R>({
-    R Function()? asyncLoading,
+    R Function(AsyncLoading<T> data)? asyncLoading,
     R Function(AsyncLoaded<T> data)? asyncLoaded,
     R Function(AsyncFailed<T> data)? asyncFailed,
   }) {
     final r = switch (this) {
-      AsyncLoading<T>() => asyncLoading?.call(),
+      AsyncLoading<T>() => asyncLoading?.call(this as AsyncLoading<T>),
       AsyncLoaded<T>() => asyncLoaded?.call(this as AsyncLoaded<T>),
       AsyncFailed<T>() => asyncFailed?.call(this as AsyncFailed<T>),
       _ => throw Exception("$runtimeType not match"),

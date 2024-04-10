@@ -1,3 +1,6 @@
+# 0.0.14
+- Feature AsyncLoading class to include a cache property in async_state.dart
+
 # 0.0.13
 - fix bug generic type missing, 
 
