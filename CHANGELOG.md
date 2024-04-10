@@ -1,3 +1,6 @@
+# 0.0.15
+- Feature AsyncLoading class to include a cache property as nullable
+
 # 0.0.14
 - Feature AsyncLoading class to include a cache property in async_state.dart
 

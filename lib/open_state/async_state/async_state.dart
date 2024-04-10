@@ -7,8 +7,8 @@ sealed class AsyncState<T> {
 }
 
 class AsyncLoading<T> extends AsyncState<T> {
-  final T cache;
-  const AsyncLoading(this.cache);
+  final T? cache;
+  const AsyncLoading({this.cache});
 }
 
 class AsyncLoaded<T> extends AsyncState<T> {
