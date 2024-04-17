@@ -1,3 +1,6 @@
+# 0.0.16
+- update ResultFailed(this.error); =>  ResultFailed({this.error});
+
 # 0.0.15
 - Feature AsyncLoading class to include a cache property as nullable
 

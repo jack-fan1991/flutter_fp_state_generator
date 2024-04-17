@@ -15,7 +15,7 @@ class ResultSuccess<T> extends Result<T> {
 
 class ResultFailed<T> extends Result<T> {
   final Object? error;
-  ResultFailed(this.error);
+  ResultFailed({this.error});
   @override
   String toString() {
     return 'ResultFailed { error : $error }';
