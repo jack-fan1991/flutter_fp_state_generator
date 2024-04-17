@@ -1,3 +1,6 @@
+# 0.0.17
+- update ResultFailed({this.error}); =>  ResultFailed([this.error]);
+
 # 0.0.16
 - update ResultFailed(this.error); =>  ResultFailed({this.error});
 
