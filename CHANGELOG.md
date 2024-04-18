@@ -1,3 +1,6 @@
+# 0.0.18
+- Fix bug parse freezed union subclass
+
 # 0.0.17
 - update ResultFailed({this.error}); =>  ResultFailed([this.error]);
 
@@ -11,7 +14,7 @@
 - Feature AsyncLoading class to include a cache property in async_state.dart
 
 # 0.0.13
-- fix bug generic type missing, 
+- Fix bug generic type missing, 
 
 # 0.0.12
 - When the class does not have member variables, use void callback.

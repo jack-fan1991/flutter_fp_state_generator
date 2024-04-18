@@ -5,6 +5,7 @@ import 'package:change_case/change_case.dart';
 import 'package:fp_state_generator/fp_state_annotation.dart';
 import 'package:fp_state_generator/src/generator_helper.dart';
 import 'package:fp_state_generator/src/open_close_finder.dart';
+
 import 'package:source_gen/source_gen.dart';
 
 class FpStateGenerator extends GeneratorForAnnotation<FpState> {
@@ -24,7 +25,7 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
     final className = generatorHelper.className;
 
     final genericsType = generatorHelper.getGenericsType(className);
-    print('====>  $genericsType');
+    // print('====>  $genericsType');
 
     // print(generatorHelper.expectPartFileName);
     await generatorHelper.fixPartImportContent();
@@ -113,8 +114,9 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
     // print('====>start freezedSubNameOrNull ${freezedClassLine.join()}=====');
     List<String> subClassName = [];
     int idx = 0;
+
     for (final l in freezedClassLine) {
-      if (l.contains('}')) {
+      if (l.startsWith('}')) {
         break;
       }
       if (l.contains('=')) {
