@@ -11,12 +11,13 @@ extension FPAsyncState<T> on AsyncState<T> {
     required R Function(AsyncLoading<T> data) asyncLoading,
     required R Function(AsyncLoaded<T> data) asyncLoaded,
     required R Function(AsyncFailed<T> data) asyncFailed,
+    R Function(AsyncState<T> data)? asyncState,
   }) {
     final r = switch (this) {
       AsyncLoading<T>() => asyncLoading(this as AsyncLoading<T>),
       AsyncLoaded<T>() => asyncLoaded(this as AsyncLoaded<T>),
       AsyncFailed<T>() => asyncFailed(this as AsyncFailed<T>),
-      AsyncState() => throw Exception("$runtimeType not match"),
+      AsyncState<T>() => asyncState?.call(this),
     };
     return r;
   }

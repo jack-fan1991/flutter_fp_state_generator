@@ -152,7 +152,32 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
       final callBackName = isClassHasMember ? '$e$endFix data' : '';
       return 'required R Function($callBackName) ${e.toCamelCase()}';
-    }).join(',\n');
+    }).toList();
+    String endFix = "";
+
+    if (!generatorHelper.isFreezed) {
+      final fullClassContent = bigOpenCloseFinder.run(
+        generatorHelper.sourceCodeContent,
+        className,
+      );
+
+      final isClassHasMember = fullClassContent.contains("final ");
+      print('>>>>>   fullClassContent ${fullClassContent}}');
+
+      print('>>>>>   isClassHasMember ${isClassHasMember}}');
+
+      final genericsType = generatorHelper.getGenericsType(className);
+      print('>>>>>   genericsType ${genericsType}}');
+
+      endFix = genericsType.isEmpty ? '' : '<$genericsType>';
+      print('>>>>>   endFix ${endFix}}');
+
+      final callBackName = '$className$endFix data';
+      print('>>>>>   callBackName ${callBackName}}');
+
+      params.add('R Function($callBackName)? ${className.toCamelCase()}');
+    }
+
     final cases = subClassName.map((e) {
       final fullClassContent = bigOpenCloseFinder.run(
         generatorHelper.sourceCodeContent,
@@ -169,12 +194,14 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
 
     return '''
 R match<R>({
-    $params,
+    ${params.join(',\n')},
   }) {
     final r = switch (this) {
       $cases
-      $className() => throw Exception("\$runtimeType not match"),
+      $className$endFix() => ${className.toCamelCase()}?.call(this),
     };
+    if(r == null){
+    }
     return r;
 } 
 ''';

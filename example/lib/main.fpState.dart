@@ -12,13 +12,14 @@ extension FPUiState on UiState {
     required R Function() rState,
     required R Function() r3State,
     required R Function(MemberState data) memberState,
+    R Function(UiState data)? uiState,
   }) {
     final r = switch (this) {
       LState() => lState(),
       RState() => rState(),
       R3State() => r3State(),
       MemberState() => memberState(this as MemberState),
-      UiState() => throw Exception("$runtimeType not match"),
+      UiState() => uiState?.call(this),
     };
     return r;
   }
@@ -71,7 +72,7 @@ extension FPFreezedState on FreezedState {
       FreezedState1() => freezedState1(this as FreezedState1),
       FreezedState2() => freezedState2(this as FreezedState2),
       FreezedState3() => freezedState3(this as FreezedState3),
-      FreezedState() => throw Exception("$runtimeType not match"),
+      FreezedState() => freezedState?.call(this),
     };
     return r;
   }

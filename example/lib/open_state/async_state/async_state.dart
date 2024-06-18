@@ -1,3 +1,4 @@
+import 'package:example/open_state/async_state/async_state.dart';
 import 'package:fp_state_generator/fp_state_annotation.dart';
 part 'async_state.fpState.dart';
 

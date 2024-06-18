@@ -10,11 +10,12 @@ extension FPResult<T> on Result<T> {
   R match<R>({
     required R Function(ResultSuccess<T> data) resultSuccess,
     required R Function(ResultFailed<T> data) resultFailed,
+    R Function(Result<T> data)? result,
   }) {
     final r = switch (this) {
       ResultSuccess<T>() => resultSuccess(this as ResultSuccess<T>),
       ResultFailed<T>() => resultFailed(this as ResultFailed<T>),
-      Result() => throw Exception("$runtimeType not match"),
+      Result<T>() => result?.call(this),
     };
     return r;
   }
