@@ -1,3 +1,6 @@
+# 0.0.19
+- Fix bug when use (super.param) return subclass instance
+
 # 0.0.18
 - Fix bug parse freezed union subclass
 

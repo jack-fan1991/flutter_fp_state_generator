@@ -60,7 +60,7 @@ void main() {
   test('test asyncState', () {
     final asyncState = AsyncLoaded(data: "data");
     final asyncMatch = asyncState.match(
-      asyncLoading: () => "AsyncLoading",
+      asyncLoading: (_) => "AsyncLoading",
       asyncLoaded: (data) => "AsyncLoaded ${data.data}",
       asyncFailed: (AsyncFailed<dynamic> data) {},
     );
@@ -68,14 +68,14 @@ void main() {
     expect(asyncMatch, "AsyncLoaded data");
 
     final asyncMatchOrElse = asyncState.matchOrElse(
-      asyncLoading: () => "AsyncLoading",
+      asyncLoading: (_) => "AsyncLoading",
       orElse: (data) => "No implement asyncLoaded so call OrElse",
     );
 
     expect(asyncMatchOrElse, "No implement asyncLoaded so call OrElse");
 
     final asyncMaybeMatch = asyncState.maybeMatch(
-      asyncLoading: () => "AsyncLoading",
+      asyncLoading: (_) => "AsyncLoading",
     );
     // No implement asyncLoaded so return null
     expect(asyncMaybeMatch, null);

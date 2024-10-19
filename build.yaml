@@ -8,6 +8,7 @@ targets:
             - test
             - example
           include:
+            - lib/**/*.dart
             - test/integration/*
             - test/integration/**/*
       source_gen|combining_builder:

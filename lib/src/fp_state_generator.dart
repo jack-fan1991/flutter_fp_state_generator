@@ -147,10 +147,14 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
       );
       final isClassHasMember = generatorHelper.isFreezed
           ? fullClassContent.contains("factory $className.${e}()") == false
-          : fullClassContent.contains("final ");
+          : (fullClassContent.contains("final ") ||
+              fullClassContent.contains("super."));
+      print(isClassHasMember);
       final genericsType = generatorHelper.getGenericsType(className);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
       final callBackName = isClassHasMember ? '$e$endFix data' : '';
+      print(callBackName);
+
       return 'required R Function($callBackName) ${e.toCamelCase()}';
     }).join(',\n');
     final cases = subClassName.map((e) {
@@ -160,7 +164,8 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
       );
       final isClassHasMember = generatorHelper.isFreezed
           ? fullClassContent.contains("factory $className.${e}()") == false
-          : fullClassContent.contains("final ");
+          : (fullClassContent.contains("final ") ||
+              fullClassContent.contains("super."));
       final genericsType = generatorHelper.getGenericsType(className);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
       final callBackName = isClassHasMember ? 'this as $e$endFix' : '';
@@ -193,7 +198,8 @@ R match<R>({
 
       final isClassHasMember = generatorHelper.isFreezed
           ? fullClassContent.contains("factory $className.${e}()") == false
-          : fullClassContent.contains("final ");
+          : (fullClassContent.contains("final ") ||
+              fullClassContent.contains("super."));
 
       final genericsType = generatorHelper.getGenericsType(e);
 
@@ -209,7 +215,8 @@ R match<R>({
       );
       final isClassHasMember = generatorHelper.isFreezed
           ? fullClassContent.contains("factory $className.${e}()") == false
-          : fullClassContent.contains("final ");
+          : (fullClassContent.contains("final ") ||
+              fullClassContent.contains("super."));
       final genericsType = generatorHelper.getGenericsType(e);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
       final callBackName = isClassHasMember ? 'this as $e$endFix' : '';
@@ -242,7 +249,8 @@ R matchOrElse<R>({
       );
       final isClassHasMember = generatorHelper.isFreezed
           ? fullClassContent.contains("factory $className.${e}()") == false
-          : fullClassContent.contains("final ");
+          : (fullClassContent.contains("final ") ||
+              fullClassContent.contains("super."));
       final genericsType = generatorHelper.getGenericsType(e);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
       final callBackName = isClassHasMember ? '$e$endFix data' : '';
@@ -255,7 +263,8 @@ R matchOrElse<R>({
       );
       final isClassHasMember = generatorHelper.isFreezed
           ? fullClassContent.contains("factory $className.${e}()") == false
-          : fullClassContent.contains("final ");
+          : (fullClassContent.contains("final ") ||
+              fullClassContent.contains("super."));
       final genericsType = generatorHelper.getGenericsType(className);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
       final callBackName = isClassHasMember ? 'this as $e$endFix' : '';
