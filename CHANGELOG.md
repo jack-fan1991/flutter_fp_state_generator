@@ -1,3 +1,7 @@
+# 0.0.20
+- Fix: Corrected callback function parameter definitions in `FpStateGenerator`
+This change ensures callback function parameters are correctly defined for classes without member variables, improving code consistency and accuracy. 
+
 # 0.0.19
 - Fix bug when use (super.param) return subclass instance
 

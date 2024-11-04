@@ -149,11 +149,11 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
           ? fullClassContent.contains("factory $className.${e}()") == false
           : (fullClassContent.contains("final ") ||
               fullClassContent.contains("super."));
-      print(isClassHasMember);
+      // print(isClassHasMember);
       final genericsType = generatorHelper.getGenericsType(className);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
-      final callBackName = isClassHasMember ? '$e$endFix data' : '';
-      print(callBackName);
+      final callBackName = isClassHasMember ? '$e$endFix data' : '$e data';
+      // print(callBackName);
 
       return 'required R Function($callBackName) ${e.toCamelCase()}';
     }).join(',\n');
@@ -168,7 +168,8 @@ class FpStateGenerator extends GeneratorForAnnotation<FpState> {
               fullClassContent.contains("super."));
       final genericsType = generatorHelper.getGenericsType(className);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
-      final callBackName = isClassHasMember ? 'this as $e$endFix' : '';
+      final callBackName =
+          isClassHasMember ? 'this as $e$endFix' : 'this as $e';
       return '$e$endFix() => ${e.toCamelCase()}($callBackName),';
     }).join('\n');
 
@@ -204,7 +205,7 @@ R match<R>({
       final genericsType = generatorHelper.getGenericsType(e);
 
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
-      final callBackName = isClassHasMember ? '$e$endFix data' : '';
+      final callBackName = isClassHasMember ? '$e$endFix data' : '$e data';
 
       return 'R Function($callBackName)? ${e.toCamelCase()}';
     }).join(',\n');
@@ -219,7 +220,8 @@ R match<R>({
               fullClassContent.contains("super."));
       final genericsType = generatorHelper.getGenericsType(e);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
-      final callBackName = isClassHasMember ? 'this as $e$endFix' : '';
+      final callBackName =
+          isClassHasMember ? 'this as $e$endFix' : 'this as $e';
       return '$e$endFix() =>${e.toCamelCase()}==null? orElse(this as $e$endFix): ${e.toCamelCase()}($callBackName),';
     }).join('\n');
 
@@ -253,7 +255,7 @@ R matchOrElse<R>({
               fullClassContent.contains("super."));
       final genericsType = generatorHelper.getGenericsType(e);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
-      final callBackName = isClassHasMember ? '$e$endFix data' : '';
+      final callBackName = isClassHasMember ? '$e$endFix data' : '$e data';
       return 'R Function($callBackName)? ${e.toCamelCase()}';
     }).join(',\n');
     final cases = subClassName.map((e) {
@@ -267,7 +269,8 @@ R matchOrElse<R>({
               fullClassContent.contains("super."));
       final genericsType = generatorHelper.getGenericsType(className);
       final endFix = genericsType.isEmpty ? '' : '<$genericsType>';
-      final callBackName = isClassHasMember ? 'this as $e$endFix' : '';
+      final callBackName =
+          isClassHasMember ? 'this as $e$endFix' : 'this as $e';
       return '$e$endFix () => ${e.toCamelCase()}?.call($callBackName),';
     }).join('\n');
     return '''
