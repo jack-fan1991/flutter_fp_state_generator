@@ -1,3 +1,6 @@
+# 0.0.21
+- Feature: add stateOrNull() 
+
 # 0.0.20
 - Fix: Corrected callback function parameter definitions in `FpStateGenerator`
 This change ensures callback function parameters are correctly defined for classes without member variables, improving code consistency and accuracy. 
