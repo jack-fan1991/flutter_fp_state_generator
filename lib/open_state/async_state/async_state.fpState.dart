@@ -55,4 +55,25 @@ extension FPAsyncState<T> on AsyncState<T> {
     };
     return r;
   }
+
+  AsyncLoading<T>? asyncLoadingOrNull() {
+    return switch (this) {
+      AsyncLoading<T>() => this as AsyncLoading<T>,
+      _ => null,
+    };
+  }
+
+  AsyncLoaded<T>? asyncLoadedOrNull() {
+    return switch (this) {
+      AsyncLoaded<T>() => this as AsyncLoaded<T>,
+      _ => null,
+    };
+  }
+
+  AsyncFailed<T>? asyncFailedOrNull() {
+    return switch (this) {
+      AsyncFailed<T>() => this as AsyncFailed<T>,
+      _ => null,
+    };
+  }
 }

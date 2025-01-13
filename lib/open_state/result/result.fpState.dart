@@ -47,4 +47,18 @@ extension FPResult<T> on Result<T> {
     };
     return r;
   }
+
+  ResultSuccess<T>? resultSuccessOrNull() {
+    return switch (this) {
+      ResultSuccess<T>() => this as ResultSuccess<T>,
+      _ => null,
+    };
+  }
+
+  ResultFailed<T>? resultFailedOrNull() {
+    return switch (this) {
+      ResultFailed<T>() => this as ResultFailed<T>,
+      _ => null,
+    };
+  }
 }
